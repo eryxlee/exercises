@@ -1,0 +1,114 @@
+
+<h1>Mako模板语言示例 - 基本语法</h1>
+
+<h3>1. 变量与简单运算</h3>
+The value of 3 + 5 is: ${3 + 5} <br>
+A string representation of 3 to the power 4 is ${pow(3, 4)} <br>
+<%
+    no_value = None
+    empty_value = ""
+    test_str = "test"
+%>
+None value=${no_value}<br>
+empty string=${empty_value}<br>
+test string=${test_str}<br>
+None value after or=${no_value or "no"}<br>
+empty string after or=${empty_value or "no"}<br>
+test string after or=${test_str or "no"}<br>
+
+
+<h3>2. 模板中的注释</h3>
+单行注释可以用##，注意在##之前不能有任何其他字符，否则将当作普通字符输出。<br>
+<%text>块状注释则可以用<%doc>标签对来标注，该标签对可以放置在模板的任何地方。</%text><br>
+所有注释内容将不会生成到对应的HTML，因此可以在模板中增加各种注释而不用担心在结果页面的影响。<br>
+## This is a comment which will not be rendered
+This will be rendered ## and so will this.
+
+<%doc>
+    This is a multiline comment which will not be rendered. This style of
+    comment is particularly useful for documentation as well as situations where
+    you want to comment out a large region of your template temporarily during
+    testing.
+</%doc>
+
+
+
+<h3>3. 模板中的文本块</h3>
+如要原样输出部分内容而不需mako解析，可以用mako中的文本块功能。<br>
+<%text>
+    This is some Mako syntax which will not be executed: ${variable}
+    Neither will this <%doc>be treated as a comment</%doc>
+</%text>
+
+
+<h3>4. if语句</h3>
+<%
+    c.name = 'James'
+%>
+
+% if c.name == 'Pylons Developer':
+    Welcome Pylons Developer
+% else:
+    Welcome guest
+% endif
+
+
+<h3>5. for语句</h3>
+<%
+    c.links = [
+        ('James','http://jimmyg.org'),
+        ('Ben','http://groovie.org'),
+        ('Philip',''),
+    ]
+%>
+
+<ul>
+% for item in c.links:
+    <li>\
+% if item[1]:
+    <a href="${item[1]}">${item[0]}</a>\
+% else:
+    ${item[0]}\
+% endif
+    </li>
+% endfor
+</ul>
+
+<%
+    title = 'Pylons Developer'
+    names = [x[0] for x in c.links]
+%>
+% for i, value in enumerate(names):
+${i+1}. ${value} <br />
+% endfor
+
+* 注意：
+1. 在mako中，当一行以\结尾时，表示在生成该行HTML之后不添加换行符。<br>
+2. 任何在python程序块中或if/for控制语句中生成的变量，都可以直接在mako中当一个变量使用。<br>
+
+
+<h3>6. 程序段</h3>
+Your title is ${title}
+   <%
+         # This block can have any indentation as long as the Python
+         # code within it is properly indented
+         if title == 'Pylons Developer':
+             msg = 'You must program in Python!'
+         else:
+             msg = ''
+     %>
+An optional message: ${msg}
+
+
+<h3>7. 模块级代码段</h3>
+mako还提供了一种模块以及的代码段。要注意的是模块级的代码段在多线程环境下，只有该模板第一次被render时才执行。而普通代码段则每次render都会被执行。
+模块级的代码段经常会被用于import一些python包。<br>
+<%!
+    import datetime
+%>
+${datetime.datetime.today()} <br>
+注意，模块级代码段必须使用<%text><%! %>标签对</%text>，而且模块级代码段中不能访问mako环境变量，也不能输出任何内容。<br>
+
+
+<h3>8. renders值</h3>
+rendered_val=${rendered_val}<br>

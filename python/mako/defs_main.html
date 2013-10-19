@@ -1,0 +1,39 @@
+
+<h1>Mako模板语言示例 - 函数、命名空间</h1>
+
+<h3>1. 函数定义</h3>
+<%def name="add(num1, num2)">
+${num1+num2}
+</%def>
+result of add(1,2) is${add(1,2)}<br>
+
+
+<h3>2. 不换行的函数定义</h3>
+<%def name="add2(num1, num2)">${num1+num2}</%def>
+result of add2(1,2) is${add2(1,2)}<br>
+因用def定义函数的时候，为了使函数代码段更清晰，经常会引入一些空格、分行等字符。<br>
+而不换行的函数定义方式在一些需要精确控制输出的小函数上比较常用。<br>
+
+
+<h3>3. 获取函数运行结果而非直接显示</h3>
+在默认方式，mako中调用函数时该函数是直接把输出字符输出到了全局输出上的，并不是返回值。如下例：<br>
+<%def name="display(num1, num2, result)">
+The result of ${num1} + ${num2} is ${result}
+</%def>
+result of display(1, 2, add(1,2)) is ${display(1, 2, add(1,2))}<br>
+如果需要得到返回值，则需要调用capture方法。如下：<br>
+result of display(1, 2, capture(add, 1, 2)) is ${display(1, 2, capture(add, 1, 2))}
+
+
+<h3>4. 使用namespace调用另一个模板中的方法、元素</h3>
+<%namespace name="nav" file="defs_lib.html" />
+${nav.navigation_links('Ben', links=[
+    ('James','http://jimmyg.org'),
+    ('Ben','http://groovie.org'),
+    ('Philip',''),
+])}
+注意：这里file参数可以是相对当前文件的相对路径或从模板根目录开始的绝对路径。<br>
+也可以用<%text><%namespace file="navigation.html" import="navigation_links" /></%text>来直接引入navigation_links，忽略namespace，用法跟python中的from import一样。<br>
+也可以用<%text><%namespace name="mymodule" module="my.module" /></%text>来引入一个标准python模块，该模块中被调用的函数第一个参数必须是context，该context就是之前提高过的mako的内置变量。不过这种方式并不推荐，一般情况下，最好把这些函数通过lib.helper来调用。<br>
+<%namespace name="other" file="defs_other.html" />
+Here is ${other.body()}<br>

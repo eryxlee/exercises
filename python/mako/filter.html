@@ -1,0 +1,31 @@
+
+<h1>Mako模板语言示例 - 过滤器</h1>
+
+<h3>1. 默认的escape</h3>
+1. The value is:  ${curl}<br>
+这种使用方式相应的python代码是 escape(curl)
+
+<h3>2. u过滤，主要用于构成URL</h3>
+2. The value is:  ${curl|u,n}<br>
+这种使用方式相应的python代码是 filters.url_escape(curl)
+
+<h3>3. h过滤，主要用于构成HTML，基本等同默认的escape</h3>
+3. The value is:  ${curl|h,n}<br>
+这种使用方式相应的python代码是 filters.html_escape(curl)
+
+<h3>4. x过滤，主要用于构成XML</h3>
+4. The value is:  ${curl|x,n}<br>
+这种使用方式相应的python代码是 filters.xml_escape(curl)
+
+<h3>5. trim过滤，去掉前后空格</h3>
+5. The value is:  ${curl|trim,n}<br>
+这种使用方式相应的python代码是 filters.trim(curl)
+
+<h3>6. entity过滤，HTML entity转换</h3>
+6. The value is:  ${curl|entity,n}<br>
+这种使用方式相应的python代码是 filters.html_entities_escape(curl)
+
+<h3>7. n过滤，去掉所有默认的过滤</h3>
+7. The value is:  ${curl|n}<br>
+这种使用方式相应的python代码是 curl
+ 
