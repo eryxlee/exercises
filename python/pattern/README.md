@@ -1,33 +1,137 @@
 
-
-
 http://www.pythontip.com/pythonPatterns/
 
-||No||模式名(中文)||模式名(英文)||
-||1||抽象工厂模式||abstract_factory||
-||2||适配器模式||adapter||
-||3||共享模式||borg||
-||4||桥接模式||bridge||
-||5||建造者模式||builder||
-6	职责链模式	chain
-7	命令模式	command
-8	组合模式	composite
-9	装饰模式	decorator
-10	外观模式	facade
-11	工厂模式	factory_method
-12	享元模式	flyweight
-13	图搜索模式	graph_search
-14	迭代器模式	iterator
-15	中介模式	mediator
-16	备忘录模式	memento
-17	空模式	null
-18	观察者模式	observer
-19	连接池模式	pool
-20	原型模式	prototype
-21	代理模式	proxy
-22	状态模式	state
-23	策略模式	strategy
-24	模板方法模式	template
-25	访问者模式	visitor
 
 
+<table>
+  <tr>
+    <td>No</td>
+    <td>模式名(中文)</td>
+    <td>模式名(英文)</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>抽象工厂模式</td>
+    <td>abstract_factory</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>适配器模式</td>
+    <td>adapter</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>共享模式</td>
+    <td>borg</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>桥接模式</td>
+    <td>bridge</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>建造者模式</td>
+    <td>builder</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>职责链模式</td>
+    <td>chain</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>命令模式</td>
+    <td>command</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>组合模式</td>
+    <td>composite</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>装饰模式</td>
+    <td>decorator</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>外观模式</td>
+    <td>facade</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>工厂模式</td>
+    <td>factory_method</td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>享元模式</td>
+    <td>flyweight</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>图搜索模式</td>
+    <td>graph_search</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td>迭代器模式</td>
+    <td>iterator</td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td>中介模式</td>
+    <td>mediator</td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>备忘录模式</td>
+    <td>memento</td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>空模式</td>
+    <td>null</td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>观察者模式</td>
+    <td>observer</td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>连接池模式</td>
+    <td>pool</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>原型模式</td>
+    <td>prototype</td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td>代理模式</td>
+    <td>proxy</td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>状态模式</td>
+    <td>state</td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>策略模式</td>
+    <td>strategy</td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>模板方法模式</td>
+    <td>template</td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td>访问者模式</td>
+    <td>visitor</td>
+  </tr>
+</table>
