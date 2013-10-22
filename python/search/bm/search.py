@@ -4,6 +4,9 @@ import sys
 import gc
 
 
+# python search.py "EXAMPLE" "HERE IS A SIMPLE EXAMPLE"
+# python search.py 00200100 00000200100
+
 # http://www.ruanyifeng.com/blog/2013/05/boyer-moore_string_search_algorithm.html
 
 def boyer_moore_search(source_str, search_str):
@@ -73,7 +76,7 @@ def boyer_moore_search(source_str, search_str):
                 suf = suffix_stack.pop()
                 found = 0
                 if suf in good_suffix and good_suffix[suf][0] != -1:
-                    steps2 = good_suffix[su]
+                    steps2 = good_suffix[suf]
                     print 'find longest suffix.', suf
                     found = 1
                 else:
