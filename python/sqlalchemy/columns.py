@@ -4,43 +4,36 @@ import simplejson as json
 
 from sqlalchemy import (
     create_engine,
-    event,
-    Table,
     Column,
     CHAR,
     Integer,
     String,
     ForeignKey,
-    func,
-    and_,
-    or_,
 )
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import (
+    sessionmaker,
     relationship,
+    column_property,
     backref,
-    aliased,
-    joinedload,
-    contains_eager,
 )
-from sqlalchemy.orm.exc import (
-    MultipleResultsFound,
-    NoResultFound,
-)
-from sqlalchemy.sql import exists
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
 
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = 'user'
 
     id = Column(Integer, primary_key=True)
     name = Column(String(30))
-    fullname = Column(String(120))
+    fullname = Column(String(50))
     password = Column(String(30))
-    from_ = Column('from', CHAR(10))   # 如果字段名跟python关键字冲突，后面加_; 字段名跟属性名字不一致要分别指定。
+
+    # 如果字段名跟python关键字冲突，后面加_; 字段名跟属性名字不一致要分别指定。
+    from_ = Column('from', CHAR(10))
+
+    # 复合字段，SQL中生成类似 concat(user.name, user.fullname) AS anon_1
+    compound_name = column_property(name + fullname)
 
     def __init__(self, name, fullname, password, from_):
         self.name = name
@@ -53,11 +46,11 @@ class User(Base):
 
 
 class Address(Base):
-    __tablename__ = 'addresses'
+    __tablename__ = 'address'
 
     id = Column(Integer, primary_key=True)
     email_address = Column(String(120), nullable=False)
-    user_id = Column(Integer, ForeignKey('users.id'))  # 外键定义
+    user_id = Column(Integer, ForeignKey('user.id'))  # 外键定义
     user = relationship(User, backref=backref('addresses', order_by=id))
 
     def __init__(self, email_address):
@@ -68,7 +61,7 @@ class Address(Base):
 
 
 if __name__ == "__main__":
-    engine = create_engine('sqlite:///:memory:', echo=True)
+    engine = create_engine('mysql://root:@127.0.0.1:3306/test?charset=utf8', echo=True)
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -77,10 +70,15 @@ if __name__ == "__main__":
     session.add(ed_user)
     session.commit()
 
-    jack = User('jack', 'Jack Bean', 'gjffdd', 'usa')
-    jack.addresses = [Address(email_address='jack@google.com'), Address(email_address='j25@yahoo.com')]
-    session.add(jack)
+    jack_user = User('jack', 'Jack Bean', 'gjffdd', 'usa')
+    jack_user.addresses = [Address(email_address='jack@google.com'), Address(email_address='j25@yahoo.com')]
+    session.add(jack_user)
     session.commit()
+
+    stmt = session.query(User) \
+        .filter(User.name == 'jack')
+    row = stmt.first()
+    print row.compound_name
 
     # 取出部分字段的内容，这是sqlalchemy会输出一个包含多个tuple的list
     stmt = session.query(User.id, User.name, User.from_) \
@@ -116,16 +114,3 @@ if __name__ == "__main__":
     session.query(User).delete()
     session.commit()
 
-    # 测试在不自动刷新的情况下flush的功能
-    session = Session()
-    session.autoflush = False
-    user = User('ed', 'Ed Jones', 'password', 'china')
-    session.add(user)
-    rows = session.query(User).filter(User.name == 'ed').all()
-    print 'added to session, not flushed, equal to 0', len(rows)
-    session.flush()
-    rows = session.query(User).filter(User.name == 'ed').all()
-    print 'flushed, equal to 1', len(rows)
-    session.rollback()
-    rows = session.query(User).filter(User.name == 'ed').all()
-    print 'rollback, equal to 0', len(rows)
