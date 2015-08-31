@@ -26,7 +26,7 @@ def column_reflect(inspector, table, column_info):
 
 
 if __name__ == "__main__":
-    engine = create_engine('mysql://root:@127.0.0.1:3306/test?charset=utf8', echo=True)
+    engine = create_engine('mysql://root:@127.0.0.1:3306/test?charset=utf8', echo=False)
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -35,16 +35,16 @@ if __name__ == "__main__":
     Base.prepare(engine)
 
     ed_user = User()
-    ed_user.attr_name = 'ed'
-    ed_user.attr_fullname = 'Ed Jones'
+    ed_user.attr_first_name = 'Ed'
+    ed_user.attr_last_name = 'Jones'
     ed_user.attr_password = 'password'
     ed_user.attr_from = 'usa'
 
     session.add(ed_user)
     session.commit()
 
-    stmt = session.query(User.attr_id, User.attr_name, User.attr_from) \
-        .filter(User.attr_name == 'ed')
+    stmt = session.query(User.attr_id, User.attr_first_name, User.attr_from) \
+        .filter(User.attr_first_name == 'Ed')
     tuple_rows = stmt.all()
 
     # 删除两个表中的数据
