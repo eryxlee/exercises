@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# requests 模块的一些联系和测试用例。
+# requests 模块的一些练习和测试用例。
 #
 # HTTP Request & Response Service: http://httpbin.org/
 
